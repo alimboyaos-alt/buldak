@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buldak Pass the Heat</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titan+One&family=Poppins:wght@400;500;600&family=Montserrat:wght@300;400;500&family=Rubik+Wet+Paint&display=swap">
+<style>
+@font-face{font-family:"KerisKedu";src:url("https://raw.githubusercontent.com/alimboyaos-alt/buldak/refs/heads/main/KERISKEDU_B.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+:root{--bg:#000;--red:#ff2a1a;--orange:#ff8a2a;--amber:#ffc04d;--cold:#7b7bff;--ice:#cfd3e0;--card:#3a3a3a;--text:#f4f4f4;
+ --disp:"Titan One","Arial Rounded MT Bold",system-ui,sans-serif;--body:"Poppins",system-ui,sans-serif;--nav:"Montserrat",system-ui,sans-serif;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(80px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden}
+#embers{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+header{position:fixed;top:0;left:0;right:0;z-index:20;padding-top:env(safe-area-inset-top,0px);background:none}
+.bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.wm{font-family:var(--disp);color:var(--red);-webkit-text-stroke:3px #fff;paint-order:stroke fill;font-size:30px;transform:rotate(-4deg);display:inline-block;line-height:1}
+.wm.xl{position:relative;z-index:3;font-size:clamp(84px,14vw,150px);-webkit-text-stroke:12px #fff;filter:drop-shadow(0 6px 0 #0006)}
+.logo{height:44px;width:auto;display:block}
+.logo.xl{position:relative;z-index:3;height:auto;width:clamp(240px,38vw,440px);filter:drop-shadow(0 6px 0 #0006)}
+.tag{font-family:var(--disp);color:var(--orange);font-size:20px}
+nav ul{display:flex;list-style:none;margin:0;padding:0;align-items:center}
+nav li+li{border-left:2px solid #ffffff55;margin-left:28px;padding-left:28px}
+nav a{font-family:var(--nav);font-weight:300;color:#ffffffb0;text-decoration:none;font-size:18px;line-height:1.2;display:block;text-align:center}
+nav a:hover,nav a:focus-visible,nav a.on{color:#fff;outline:none}
+#menu{display:none;background:none;border:0;padding:8px;cursor:pointer}
+#menu i{display:block;width:30px;height:2px;background:#fff9;margin:7px 0}
+section{position:relative;z-index:1;min-height:100vh;padding:110px 24px 70px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+h2{font-family:var(--disp);font-weight:400;color:var(--amber);font-size:clamp(40px,7vw,64px);margin:0 0 28px;text-align:center;text-shadow:0 0 24px #ff5a00cc,0 0 6px #ff3d00;letter-spacing:.02em}
+/* HOME */
+#home{align-items:stretch}
+.hero{max-width:1200px;width:100%;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px;position:relative}
+.hero-l{display:flex;flex-direction:column;align-items:center;width:fit-content}
+.sub{position:relative;z-index:2;display:block;width:clamp(240px,38vw,440px);height:auto;overflow:visible;margin:-14px 0 -6px;filter:drop-shadow(0 3px 0 #7a1500)}
+.sub text{font-family:"KerisKedu",var(--disp)}
+.flames{width:210px;height:auto;margin-bottom:-26px;position:relative;z-index:1;filter:drop-shadow(0 0 14px #ff3d0088)}
+.fire{position:relative;width:min(440px,92vw);height:280px;margin-bottom:-70px;z-index:0;pointer-events:none;transform:translateY(-36px)}
+.fire img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:bottom;filter:url(#knock);transform:scale(1.9);transform-origin:50% 86%}
+.fire .flames{position:absolute;left:50%;bottom:0;transform:translateX(-50%);margin:0;display:none}
+.fire.broken img{display:none}.fire.broken .flames{display:block}
+.cta{z-index:2}
+.cta{font-family:var(--body);font-weight:500;font-size:26px;color:#fff;background:linear-gradient(#ff5a4a,#ffd9d4 120%);border:0;border-radius:40px;padding:14px 40px;cursor:pointer;text-decoration:none;position:relative;transition:transform .15s,box-shadow .15s}
+.cta:hover,.cta:focus-visible{transform:scale(1.05);box-shadow:0 0 30px #ff3d00aa;outline:none}
+.hero-r{position:relative;height:520px}
+.hero-r svg.mapbg{position:absolute;inset:0;width:100%;height:100%;opacity:.95}
+.mascot{position:absolute;right:-10px;bottom:-60px;width:min(340px,70%);animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(2deg)}}
+/* MAP */
+.mapimg,.mapimg2{display:none}
+.mapimg2{position:absolute;left:-30%;top:0;width:100%;height:100%;z-index:-1;object-fit:contain;object-position:50% 50%}
+body.mapok .mapimg{display:inline}body.mapok .mapimg2{display:block}
+body.mapok .shapes,body.mapok svg.mapbg{display:none}
+.mapwrap{position:relative;display:flex;gap:30px;align-items:flex-start;max-width:1000px;width:100%;justify-content:center}
+.legend{display:flex;flex-direction:column;gap:18px;padding-top:30px}
+.lg{display:flex;align-items:center;gap:14px;font-family:var(--disp);font-size:24px}
+.dots{display:flex;flex-direction:column;gap:14px}
+.dot{width:46px;height:46px;border-radius:50%;border:4px solid #fff}
+.mapbox{position:relative;width:min(520px,70vw)}
+.mapbox svg{width:100%;height:auto;display:block}
+.pin{cursor:pointer}
+.pin:focus-visible circle.ring,.pin:hover circle.ring{stroke:var(--amber)}
+.info{margin-top:18px;background:#1c1c1ccc;border:2px solid #ff5a2a66;border-radius:20px;padding:16px 22px;min-height:84px;text-align:center;max-width:420px;margin-inline:auto}
+.info b{font-family:var(--disp);font-weight:400;font-size:24px;color:var(--amber);display:block}
+.meter{height:10px;border-radius:6px;background:#ffffff22;margin-top:10px;overflow:hidden}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--cold),var(--amber),var(--red));transition:width .5s}
+/* LEADERBOARD */
+.timeleft{font-family:"Rubik Wet Paint",var(--disp);color:var(--red);font-size:22px;align-self:flex-start;max-width:1000px;width:100%;margin:0 auto 6px}
+.timeleft span{font-family:var(--body);color:#fff;font-size:17px;margin-left:10px}
+.board{width:100%;max-width:1000px;margin-bottom:60px}
+.podium{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:34px;align-items:end;max-width:600px;margin:20px auto 34px}
+.pod{position:relative;background:var(--card);border-radius:22px;text-align:center;padding:62px 10px 18px;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:190px;justify-content:center}
+.pod.p1{min-height:260px;background:linear-gradient(#3a3a3a 55%,#ffb347);overflow:hidden}
+.pod .cap{position:absolute;top:-36px;left:50%;transform:translateX(-50%);width:130px;height:46px;border-radius:50% 50% 0 0;background:linear-gradient(#ffd23a,#ff5a1a);z-index:-1}
+.medal{position:absolute;top:-24px;left:50%;transform:translateX(-50%);width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-family:var(--disp);font-size:26px;color:#fff;border:3px solid #fff8}
+.m1{background:#f5b400}.m2{background:#b9b6e0}.m3{background:#f28a4e}
+.pod .n{font-size:clamp(34px,6vw,56px);font-weight:500}
+.pod .h{color:#d9302a;font-size:26px}
+.pod .l{background:#ff4a14;border-radius:14px;padding:3px 18px;font-size:15px;min-width:80%}
+.p1 .l{background:#ff4a14}
+.row{display:flex;align-items:center;gap:14px;background:#3a3a3acc;border-radius:30px;padding:8px 24px 8px 8px;margin-bottom:10px;font-size:19px}
+.row .rk{background:#8a8a8a;border-radius:50%;width:44px;height:44px;display:grid;place-items:center;font-size:16px}
+.row .nm{flex:1}
+.row .v{border-left:1px solid #fff4;padding-left:22px}
+.row .h{color:#d9302a;margin-left:14px}
+/* EVENT */
+.count{display:flex;gap:clamp(8px,2vw,28px);margin-top:16px}
+.u{text-align:center}
+.u b{display:block;font-weight:400;font-size:clamp(40px,9vw,92px);background:#3d3d3dcc;padding:clamp(8px,2vw,26px) clamp(14px,3vw,40px);min-width:clamp(70px,14vw,170px)}
+.u span{display:block;margin-top:8px;font-size:clamp(13px,2vw,18px)}
+.tl{font-family:"Rubik Wet Paint",var(--disp);color:var(--red);font-size:clamp(40px,7vw,64px)}
+.chilli{position:absolute;right:-30px;bottom:30px;width:min(300px,35vw);transform:rotate(-8deg);filter:drop-shadow(0 0 30px #ff6a00)}
+img.mascot{height:auto}
+.mascot.s{left:-60px;right:auto;bottom:10px;width:min(240px,32vw)}
+/* ABOUT */
+.about{max-width:680px;text-align:center;font-size:18px;line-height:1.7;color:#e8e8e8}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:900px;width:100%;margin-top:34px}
+.step{background:#1c1c1ccc;border:2px solid #ff5a2a55;border-radius:22px;padding:20px}
+.step b{font-family:var(--disp);font-weight:400;color:var(--orange);font-size:22px;display:block;margin-bottom:6px}
+.step p{margin:0;font-size:15px;line-height:1.5;color:#ddd}
+footer{position:relative;z-index:1;text-align:center;padding:30px;color:#888;font-size:14px}
+@media(max-width:860px){
+ #menu{display:block}
+ nav{position:absolute;top:100%;right:0;left:0;background:#000e;display:none}
+ nav.open{display:block}
+ nav ul{flex-direction:column;padding:10px 0}
+ nav li+li{border:0;margin:0;padding:0}
+ nav a{padding:14px;font-size:20px}
+ .tag{display:none}
+ .hero{grid-template-columns:1fr;justify-items:center}
+ .hero-r{height:420px;width:100%}
+ .mapwrap{flex-direction:column;align-items:center}
+ .legend{flex-direction:row;padding:0}.dots{flex-direction:row}
+ .lg{font-size:18px}.dot{width:30px;height:30px;border-width:3px}
+ .podium{gap:14px}
+ .steps{grid-template-columns:1fr}
+ .chilli{display:none}.mascot.s{display:none}
+}
+@media(prefers-reduced-motion:reduce){.mascot{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<canvas id="embers" aria-hidden="true"></canvas>
+<header><div class="bar">
+ <a class="brand" href="#home" aria-label="Buldak Pass the Heat home"><img class="logo" src="https://raw.githubusercontent.com/alimboyaos-alt/buldak/refs/heads/main/buldak%20logo.png" alt="Buldak" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'wm',textContent:'Buldak'}))"><span class="tag">Pass the Heat</span></a>
+ <nav id="nav" aria-label="Main"><ul>
+  <li><a href="#home">Home</a></li><li><a href="#heat-map">Heat Map</a></li><li><a href="#leaderboard">Leader<br>Board</a></li><li><a href="#about">About Us</a></li>
+ </ul></nav>
+ <button id="menu" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+</div></header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+ <filter id="knock" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 -1.6 0 1.6"/></filter>
+ <path id="luzon" d="M210 40L262 28L292 82L300 150L336 200L304 262L346 302L334 346L292 334L270 372L228 382L198 340L240 298L210 240L190 172L200 100Z"/>
+ <path id="mind" d="M300 610L380 582L450 604L474 684L440 744L380 764L330 724L290 684Z"/>
+ <path id="vis1" d="M180 420L225 410L235 440L200 455Z"/>
+ <path id="vis2" d="M230 465L275 450L285 490L250 505Z"/>
+ <path id="vis3" d="M290 470L325 480L335 540L305 560L285 520Z"/>
+ <path id="vis4" d="M350 410L400 405L410 470L375 500L350 460Z"/>
+ <path id="pal" d="M60 560L112 600L172 660L192 704L170 708L100 642Z"/>
+ <radialGradient id="glow"><stop offset="0" stop-color="#ff1a0a"/><stop offset="1" stop-color="#ff1a0a" stop-opacity="0"/></radialGradient>
+ <g id="chip"><path d="M0 0C-16-18-24-30-24-44a24 24 0 0 1 48 0C24-30 16-18 0 0Z" fill="#7a0d0d"/><circle class="ring" cx="0" cy="-44" r="16" fill="#fff" stroke="#fff" stroke-width="2"/><path d="M-9-36C-4-48 4-50 9-52M-9-52C-4-44 4-40 9-36" stroke="#d11" stroke-width="5" stroke-linecap="round" fill="none"/></g>
+ <g id="flame"><path d="M10 80C0 50 22 40 20 10C34 30 38 20 40 0C50 30 62 40 60 80Z" fill="#ff2a1a"/><path d="M26 80C24 62 34 56 36 40C44 56 52 60 50 80Z" fill="#fff"/></g>
+ <g id="chick">
+  <path d="M170 20C150-20 190-60 210-110C225-60 250-40 240 10C260-20 280-50 275-90C310-40 305 20 260 40Z" fill="#ff5a4a"/>
+  <ellipse cx="200" cy="170" rx="170" ry="150" fill="#e8303a" stroke="#222" stroke-width="5"/>
+  <circle cx="165" cy="130" r="40" fill="#fff" stroke="#222" stroke-width="5"/><circle cx="215" cy="118" r="46" fill="#fff" stroke="#222" stroke-width="5"/>
+  <circle cx="160" cy="125" r="16" fill="#111"/><circle cx="212" cy="112" r="20" fill="#111"/>
+  <path d="M120 180Q170 160 190 195Q160 240 125 215Z" fill="#ffc04d" stroke="#222" stroke-width="5"/>
+  <path d="M-60 170L70 120L80 160L-30 200Z" fill="#e8303a" stroke="#222" stroke-width="5"/>
+ </g>
+</defs></svg>
+
+<main>
+<section id="home"><div class="hero">
+ <div class="hero-l">
+  <img class="logo xl" src="https://raw.githubusercontent.com/alimboyaos-alt/buldak/refs/heads/main/buldak%20logo.png" alt="Buldak" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'wm xl',textContent:'Buldak'}))">
+  <svg class="sub" viewBox="-40 -20 480 120" role="img" aria-label="Pass the Heat"><defs><linearGradient id="subgrad" gradientUnits="userSpaceOnUse" x1="0" y1="10" x2="0" y2="85"><stop offset=".1" stop-color="#ffb347"/><stop offset=".55" stop-color="#ff6a1a"/><stop offset="1" stop-color="#ff2a1a"/></linearGradient><path id="arc" d="M20 80Q200 14 380 80"/></defs><text font-size="44" text-anchor="middle" fill="url(#subgrad)"><textPath href="#arc" startOffset="50%">Pass the Heat</textPath></text></svg>
+  <div class="fire" id="fire"><img id="fireimg" src="https://raw.githubusercontent.com/alimboyaos-alt/buldak/refs/heads/main/tumblr_otwzm1Sbb81runoqyo1_540.webp" alt="" aria-hidden="true"><svg class="flames" viewBox="0 0 100 90" aria-hidden="true"><use href="#flame" transform="translate(-20 0)"/><use href="#flame" transform="translate(10 8) scale(.8)"/><use href="#flame" transform="translate(30 0)"/></svg></div>
+  <a class="cta" href="#heat-map">Heat Map</a>
+ </div>
+ <div class="hero-r">
+  <img class="mapimg2" src="https://raw.githubusercontent.com/alimboyaos-alt/buldak/refs/heads/main/philippines1.png" alt="" aria-hidden="true">
+  <svg class="mapbg" viewBox="150 20 330 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+   <clipPath id="cl"><use href="#luzon"/></clipPath>
+   <g clip-path="url(#cl)"><rect x="150" y="0" width="400" height="420" fill="#ffc04d"/><circle cx="230" cy="130" r="50" fill="#cfd3e0"/><circle cx="270" cy="100" r="50" fill="#7b7bff"/><circle cx="300" cy="190" r="55" fill="#ff2a1a"/><circle cx="220" cy="260" r="50" fill="#ff8a2a"/><circle cx="280" cy="330" r="45" fill="#ff8a2a"/></g>
+  </svg>
+  <img class="mascot" id="mascotimg" src="https://raw.githubusercontent.com/alimboyaos-alt/buldak/refs/heads/main/mascot1.png" alt="Buldak mascot pointing at the map"><svg class="mascot" id="mascotfb" viewBox="-70 -130 400 400" role="img" aria-label="Buldak mascot pointing at the map" style="display:none"><use href="#chick"/></svg>
+ </div>
+</div></section>
+
+<section id="heat-map">
+ <h2>Heat Map</h2>
+ <div class="mapwrap">
+  <div class="legend"><div class="lg" style="color:var(--red)"><div class="dots"><div class="dot" style="background:var(--red)"></div></div>On Fire</div>
+   <div class="lg" style="color:var(--amber)"><div class="dots"><div class="dot" style="background:var(--orange)"></div><div class="dot" style="background:var(--amber)"></div></div>Warming Up</div>
+   <div class="lg" style="color:#8fb4ff"><div class="dots"><div class="dot" style="background:var(--ice)"></div><div class="dot" style="background:var(--cold)"></div></div>Cold</div></div>
+  <div>
+   <div class="mapbox"><svg viewBox="30 10 470 780" role="group" aria-label="Philippines heat map (mockup)">
+    <defs><clipPath id="c1"><use href="#luzon"/></clipPath><clipPath id="c2"><use href="#mind"/></clipPath><clipPath id="c3"><use href="#vis1"/><use href="#vis2"/><use href="#vis3"/><use href="#vis4"/></clipPath><clipPath id="c4"><use href="#pal"/></clipPath><filter id="bl"><feGaussianBlur stdDeviation="6"/></filter></defs>
+    <image class="mapimg" href="https://raw.githubusercontent.com/alimboyaos-alt/buldak/refs/heads/main/philippines.png" x="30" y="10" width="470" height="780" preserveAspectRatio="xMidYMid meet"/>
+<g class="shapes"><g clip-path="url(#c1)"><rect x="150" y="0" width="260" height="420" fill="#ffc04d"/><g filter="url(#bl)"><circle cx="245" cy="95" r="45" fill="#ff2a1a"/><circle cx="290" cy="150" r="45" fill="#ff2a1a"/><circle cx="225" cy="180" r="40" fill="#7b7bff"/><circle cx="215" cy="140" r="25" fill="#cfd3e0"/><circle cx="250" cy="250" r="45" fill="#ff8a2a"/><circle cx="262" cy="320" r="45" fill="#ff2a1a"/><circle cx="320" cy="300" r="30" fill="#ff8a2a"/></g></g>
+    <g clip-path="url(#c3)"><rect x="150" y="380" width="300" height="200" fill="#ff8a2a"/><g filter="url(#bl)"><circle cx="205" cy="435" r="30" fill="#ff2a1a"/><circle cx="305" cy="505" r="30" fill="#ff2a1a"/><circle cx="375" cy="440" r="32" fill="#7b7bff"/><circle cx="360" cy="480" r="22" fill="#ffc04d"/><circle cx="255" cy="480" r="22" fill="#cfd3e0"/></g></g>
+    <g clip-path="url(#c2)"><rect x="280" y="570" width="220" height="210" fill="#ff8a2a"/><g filter="url(#bl)"><circle cx="340" cy="620" r="35" fill="#ff2a1a"/><circle cx="420" cy="620" r="35" fill="#ff2a1a"/><circle cx="440" cy="700" r="30" fill="#7b7bff"/><circle cx="370" cy="725" r="30" fill="#cfd3e0"/><circle cx="320" cy="690" r="25" fill="#ffc04d"/></g></g>
+    <g clip-path="url(#c4)"><rect x="50" y="550" width="160" height="170" fill="#ff8a2a"/></g></g>
+    <g id="pins"></g>
+   </svg></div>
+   <div class="info" id="info" aria-live="polite"><b>Tap a pin</b>See how hot each region is right now.</div>
+  </div>
+ </div>
+</section>
+
+<section id="leaderboard">
+ <div class="board">
+  <div class="timeleft">Time Left<span id="lbt">7d, 14hr, 5min</span></div>
+  <h2>Regional</h2>
+  <div class="podium">
+   <div class="pod"><span class="cap"></span><span class="medal m2">2</span><span class="n">8.2k</span><span class="h">&#9829;</span><span class="l">Ilocos</span></div>
+   <div class="pod p1"><span class="medal m1">1</span><span class="n">10.4k</span><span class="h">&#9829;</span><span class="l">Metro Manila</span></div>
+   <div class="pod"><span class="cap"></span><span class="medal m3">3</span><span class="n">7.5k</span><span class="h">&#9829;</span><span class="l">Pampanga</span></div>
+  </div>
+  <div id="rg"></div>
+ </div>
+ <div class="board">
+  <h2>Universities</h2>
+  <div class="podium">
+   <div class="pod"><span class="cap"></span><span class="medal m2">2</span><span class="n">8.2k</span><span class="h">&#9829;</span><span class="l">UP</span></div>
+   <div class="pod p1"><span class="medal m1">1</span><span class="n">10.4k</span><span class="h">&#9829;</span><span class="l">PUP</span></div>
+   <div class="pod"><span class="cap"></span><span class="medal m3">3</span><span class="n">7.5k</span><span class="h">&#9829;</span><span class="l">UST</span></div>
+  </div>
+  <div id="un"></div>
+ </div>
+</section>
+
+<section id="next-event">
+ <svg class="mascot s" viewBox="-70 -130 400 400" aria-hidden="true"><use href="#chick"/></svg>
+ <svg class="chilli" viewBox="0 0 100 300" aria-hidden="true"><path d="M60 0C40 10 30 60 28 120C26 190 40 250 70 290C90 240 96 160 90 90C86 40 76 10 60 0Z" fill="#d6141c"/><path d="M60 0C50 30 46 90 48 160" stroke="#ff7a7a" stroke-width="5" fill="none" opacity=".6"/><path d="M52 0C50-10 60-18 68-10" stroke="#3c8a2a" stroke-width="10" fill="none"/></svg>
+ <h2>Next Event</h2>
+ <div class="tl">Time Left</div>
+ <div class="count" role="timer" aria-live="off">
+  <div class="u"><b id="d">00</b><span>Days</span></div><div class="u"><b id="h">00</b><span>Hrs</span></div><div class="u"><b id="m">00</b><span>Min</span></div><div class="u"><b id="s">00</b><span>Sec</span></div>
+ </div>
+</section>
+
+<section id="about">
+ <h2>About Us</h2>
+ <p class="about">Pass the Heat is a nationwide challenge for Buldak fans. Take the spicy noodle challenge, tag a friend to pass it on, and watch your region and university climb the heat map.</p>
+ <div class="steps">
+  <div class="step"><b>Take the challenge</b><p>Eat Buldak Original and post your reaction with #PassTheHeat.</p></div>
+  <div class="step"><b>Pass it on</b><p>Tag a friend to take the next bowl. Every tag adds heat to your region.</p></div>
+  <div class="step"><b>Heat up your school</b><p>Add your university and push it to the top of the leaderboard.</p></div>
+ </div>
+</section>
+</main>
+<footer>Campaign mockup for ADPR 303. Not an official Samyang site.</footer>
+
+<script>
+(function(){
+ var $=function(i){return document.getElementById(i)};
+ var fi=document.getElementById('fireimg');fi.addEventListener('error',function(){document.getElementById('fire').classList.add('broken')});
+ document.getElementById('mascotimg').addEventListener('error',function(){this.style.display='none';document.getElementById('mascotfb').style.display='block'});
+ var mp=new Image();mp.onload=function(){document.body.classList.add('mapok')};mp.src='https://raw.githubusercontent.com/alimboyaos-alt/buldak/refs/heads/main/philippines.png';
+ // nav
+ var nav=$('nav'),mb=$('menu');
+ mb.onclick=function(){var o=nav.classList.toggle('open');mb.setAttribute('aria-expanded',o)};
+ nav.addEventListener('click',function(e){if(e.target.tagName==='A'){nav.classList.remove('open');mb.setAttribute('aria-expanded',false)}});
+ // list rows
+ function rows(id,n){var h='';['4th','5th','6th'].forEach(function(r){h+='<div class="row"><span class="rk">'+r+'</span><span class="nm">'+n+'</span><span class="v">1,234<span class="h">&#9829;</span></span></div>'});$(id).innerHTML=h}
+ rows('rg','Place Holder');rows('un','Place Holder');
+ // pins
+ var P=[['Ilocos Norte',220,70,92],['Cagayan Valley',285,115,88],['Central Luzon',232,250,81],['Calabarzon',260,330,76],['Mindoro',205,432,70],['Panay',255,478,64],['Negros',312,515,72],['Eastern Samar',380,430,85],['Zamboanga',340,630,90],['Davao',420,630,94],['Caraga',440,700,87]];
+ var g=$('pins'),NS='http://www.w3.org/2000/svg',cur=null;
+ P.forEach(function(p){
+  var a=document.createElementNS(NS,'g');a.setAttribute('class','pin');a.setAttribute('tabindex','0');a.setAttribute('role','button');a.setAttribute('aria-label',p[0]+' heat '+p[3]+'%');
+  a.setAttribute('transform','translate('+p[1]+' '+p[2]+') scale(.85)');
+  a.innerHTML='<circle cx="0" cy="-20" r="44" fill="url(#glow)" opacity=".75"/><use href="#chip"/>';
+  function show(){$('info').innerHTML='<b>'+p[0]+'</b>Heat level '+p[3]+'%'+(p[3]>=80?' &middot; On Fire':p[3]>=60?' &middot; Warming Up':' &middot; Cold')+'<div class="meter"><i style="width:0"></i></div>';
+   var m=$('info').querySelector('i');requestAnimationFrame(function(){m.style.width=p[3]+'%'})}
+  a.onclick=show;a.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();show()}};
+  g.appendChild(a)});
+ // countdown
+ var end=Date.now()+((2*24+22)*3600+15*60+30)*1000,lb=Date.now()+((7*24+14)*3600+5*60)*1000;
+ function z(n){return String(n).padStart(2,'0')}
+ function tick(){var t=Math.max(0,end-Date.now())/1000|0;
+  $('d').textContent=z(t/86400|0);$('h').textContent=z(t%86400/3600|0);$('m').textContent=z(t%3600/60|0);$('s').textContent=z(t%60);
+  var l=Math.max(0,lb-Date.now())/60000|0;$('lbt').textContent=(l/1440|0)+'d, '+(l%1440/60|0)+'hr, '+(l%60)+'min'}
+ tick();setInterval(tick,1000);
+ // embers
+ var c=$('embers'),x=c.getContext('2d'),W,H,E=[];
+ function rs(){W=c.width=innerWidth;H=c.height=innerHeight}rs();addEventListener('resize',rs);
+ for(var i=0;i<70;i++)E.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+.6,v:Math.random()*.6+.2,a:Math.random()*.6+.2});
+ var still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ function draw(){x.clearRect(0,0,W,H);E.forEach(function(e){x.fillStyle='rgba(255,'+(120+e.r*40|0)+',30,'+e.a+')';x.beginPath();x.arc(e.x,e.y,e.r,0,7);x.fill();if(!still){e.y-=e.v;e.x+=Math.sin(e.y/40)*.3;if(e.y<-5){e.y=H+5;e.x=Math.random()*W}}});if(!still)requestAnimationFrame(draw)}
+ draw();
+})();
+</script>
+</body>
+</html>
